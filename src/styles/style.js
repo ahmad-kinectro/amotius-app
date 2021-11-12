@@ -107,12 +107,12 @@ const styles = StyleSheet.create({
   },
   authLogo: {
     width: 200,
-    height: 150,
+    height: 200,
     borderRadius: 10,
     // backgroundColor: 'red',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginVertical: 5,
+    marginVertical: 2.5,
   },
   dateInputField: {
     paddingLeft: 5,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 
   },
   textAuthButton: {
-    color: Colors.BLACK,
+    color: Colors.WHITE,
     fontSize: Mixins.scaleFont(16),
     fontWeight: 'bold',
   },
@@ -161,6 +161,17 @@ const styles = StyleSheet.create({
     height: 30, width: 20
     // , bottom: 15, top: 10
     , justifyContent: 'flex-end', alignContent: 'center', alignItems: 'center',
+  },
+  DateTimePicker: {
+    width: '100%',
+    paddingBottom: 5,
+    marginBottom: 10,
+  },
+  DateIconComponent: {
+    position: 'absolute',
+    top: 8,
+    right: 5,
+    paddingBottom: 10,
   },
 });
 export default styles;

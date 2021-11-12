@@ -5,8 +5,6 @@ import React from 'react';
 import {
   SafeAreaView,
   Image,
-  StatusBar,
-  StyleSheet,
   Text,
   View,
   Platform,
@@ -17,9 +15,12 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TextField from '../../components/TextField';
 import * as Yup from 'yup';
 import {Colors, Mixins, Spinner, Styles} from '../../styles';
-import styles from './styles'
-import Logo from '../../assets/Logo.png'
+import styles from './styles';
+import Logo from '../../assets/amotius.png';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
+import FastImage from 'react-native-fast-image';
+import {UserLogin} from './networkCall';
+import {showMessage} from 'react-native-flash-message';
 
 
 const validationSchema = Yup.object().shape({
@@ -30,41 +31,38 @@ const validationSchema = Yup.object().shape({
 
 });
 const Login = props => {
-  const {navigation} = props
+  const {navigation} = props;
   const passwordField = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
-  const [hidePass, setHidePass] = React.useState(true);
+  const [hidePassword, setHidePassword] = React.useState(true);
   const handleChange = (formData, formik) => {
     setLoading(true);
-    console.log('formdata', formData)
-    if (formData) {
-      setLoading(false)
-      Alert.alert('hi' + formData.email)
-    }
-    // await AuthLogin(formData.email, formData.password).then(res => {
-    //   setLoading(false);
-    //   if (res.status === 200) {
-    //     console.log('res', res)
-    //     props.setAuth(true);
-    //     props.setUserId(res.userId);
-    //     props.setOrganization_id(res.organization_id);
-    //     props.setUserName(res.userName)
-    //     props.setUserRole(res.useRole)
-    //     showMessage({
-    //       message: '',
-    //       description: res.message,
-    //       type: 'success',
-    //     });
-    //     // navigation.dispatch(StackActions.replace('Drawer'));
-    //   } else {
-    //     showMessage({
-    //       message: '',
-    //       description: res.message,
-    //       type: 'danger',
-    //     });
-    //   }
-    // });
-    // formik.setSubmitting(false);
+    UserLogin(formData).then((res) => {
+      if (res.status === 200) {
+        if (res.role === 'admin') {
+          navigation.navigate('Register');
+          showMessage({
+            visible: true,
+            key: Math.random().toString(36).substring(7),
+            type: 'success',
+            message: '',
+            description: 'Login Successfully!'
+          });
+        }
+        if (res.role === 'customer') {
+          navigation.navigate('Register');
+        }
+      } else {
+        showMessage({
+          visible: true,
+          key: Math.random().toString(36).substring(7),
+          type: 'danger',
+          message: res.message,
+        });
+      }
+      setLoading(false);
+    });
+    formik.setSubmitting(false);
   };
 
 
@@ -74,10 +72,9 @@ const Login = props => {
         <Formik onSubmit={handleChange}
           validationSchema={validationSchema}>
           {props => (
-
-            <View style={[Styles.flex, styles.mainWrapper,]}>
-              <View style={[Styles.flexCenter, styles.logoWrapper]}>
-                <Image source={Logo} style={Styles.authLogo} />
+            <View style={[Styles.flex, styles.mainWrapper]}>
+              <View style={[Styles.flexCenter]}>
+                <FastImage source={Logo} style={Styles.authLogo} resizeMode={FastImage.resizeMode.contain} />
               </View>
               <Text
                 style={[Styles.text24BlackBold]}>
@@ -116,7 +113,7 @@ const Login = props => {
                   textColor={Colors.BLACK}
                   baseColor={Colors.BLACK}
                   placeholderTextColor={Colors.GRAY}
-                  secureTextEntry={hidePass}
+                  secureTextEntry={hidePassword}
                   onChangeText={password =>
                     props.setFieldValue('password', password)
                   }
@@ -132,17 +129,16 @@ const Login = props => {
                   fontSize={14}
                   onSubmitEditing={props.handleSubmit}
                 />
-                <View style={[Styles.eyeView]}>
+                <TouchableOpacity style={[Styles.eyeView]} onPress={() => setHidePassword(!hidePassword)} activeOpacity={0.6}>
                   <FIcon
-                    name={hidePass ? 'eye-slash' : 'eye'}
+                    name={hidePassword ? 'eye-slash' : 'eye'}
                     size={15}
-                    color={hidePass ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
-                    onPress={() => setHidePass(!hidePass)}
+                    color={hidePassword ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
                   />
-                </View>
+                </TouchableOpacity>
 
               </View>
-              <TouchableOpacity style={{}} onPress={() => {navigation.navigate('ForgetPassword')}}>
+              <TouchableOpacity style={{}} onPress={() => {navigation.navigate('ForgetPassword');}}>
                 <Text
                   style={[Styles.text12Black]}>
                   Forget Password?
@@ -165,7 +161,7 @@ const Login = props => {
                 >
                   {!loading && (
                     <Text
-                      style={[Styles.textAuthButton, {paddingRight: loading ? 15 : 0, },]}>
+                      style={[Styles.textAuthButton, {paddingRight: loading ? 15 : 0}]}>
                       LOGIN
                     </Text>
                   )}
@@ -177,7 +173,7 @@ const Login = props => {
                     />
                   )}
                 </TouchableOpacity>
-                <View style={Styles.rowFlexEnd}>
+                <View style={[Styles.rowFlexEnd, {paddingTop: 5}]}>
                   <TouchableOpacity
                     style={Styles.flexDirectionRow}
                     activeOpacity={0.6}
@@ -194,7 +190,6 @@ const Login = props => {
           )}
         </Formik>
       </KeyboardAwareScrollView>
-
     </SafeAreaView>
   );
 };

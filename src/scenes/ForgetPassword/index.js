@@ -15,6 +15,10 @@ import TextField from '../../components/TextField';
 import * as Yup from 'yup';
 import {Colors, Mixins, Spinner, Styles} from '../../styles';
 import styles from './styles';
+import Logo from '../../assets/amotius.png';
+import FastImage from 'react-native-fast-image';
+import {showMessage} from 'react-native-flash-message';
+import {ForgotPassword} from './networkCall';
 
 
 const validationSchema = Yup.object().shape({
@@ -31,11 +35,26 @@ const ForgetPassword = props => {
   };
   const handleChange = (formData, formik) => {
     setLoading(true);
-    console.log('formdata', formData);
-    if (formData) {
+    ForgotPassword(formData).then((res) => {
       setLoading(false);
-      Alert.alert('Check Your Email ' + formData.email);
-    }
+      if (res.status === 200) {
+        showMessage({
+          visible: true,
+          key: Math.random().toString(36).substring(7),
+          type: 'success',
+          message: res.message,
+          description: 'Please check your email',
+        });
+      } else {
+        showMessage({
+          visible: true,
+          key: Math.random().toString(36).substring(7),
+          type: 'error',
+          message: res.message,
+        });
+      }
+    });
+    formik.setSubmitting(false);
   };
   return (
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
@@ -44,8 +63,10 @@ const ForgetPassword = props => {
           <Formik onSubmit={handleChange}
             validationSchema={validationSchema}>
             {props => (
-
               <View style={[Styles.flex, styles.mainWrapper]}>
+                <View style={[Styles.flexCenter]}>
+                  <FastImage source={Logo} style={Styles.authLogo} resizeMode={FastImage.resizeMode.contain} />
+                </View>
                 <View style={{height: 20}} />
                 <View style={Styles.flexCenter}>
                   <TextField
@@ -90,12 +111,12 @@ const ForgetPassword = props => {
                   >
                     {!loading && (
                       <Text
-                        style={[Styles.text12BlackBold,
+                        style={[Styles.textAuthButton,
                         {
                           paddingRight: loading ? 15 : 0,
                         },
                         ]}>
-                        Submit
+                        Reset
                       </Text>
                     )}
                     {loading && (
@@ -114,7 +135,7 @@ const ForgetPassword = props => {
                       onPress={() => {
                         navigation.navigate('Login');
                       }}>
-                      <Text style={[Styles.text12BlackBold]}>Back To Login?</Text>
+                      <Text style={[Styles.text12BlackBold, {paddingTop: 2.5}]}>Back To Login?</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

@@ -36,7 +36,7 @@ const StackCommonHeaderOptions = (navigation, back = false) => {
         color={Colors.WHITE}
         size={28}
         style={{paddingLeft: 15}}
-        onPress={() => navigation.toggleDrawer()}
+      // onPress={() => navigation.toggleDrawer()}
       />
     ),
   };
@@ -57,7 +57,7 @@ const Navigation = ({
   return (
     <NavigationContainer>
       <Stack.Navigator
-        mode="card"
+        presentation="card"
         initialRouteName="Loading"
         screenOptions={StackCommonOptions}>
         <Stack.Screen

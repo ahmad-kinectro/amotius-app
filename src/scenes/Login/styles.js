@@ -14,7 +14,7 @@ export default StyleSheet.create({
   logoWrapper: {
     flex: 0.8,
     paddingBottom: 20,
-    paddingTop: 20,
+    paddingTop: 10,
   },
   TouchableOpacity: {
     height: 50,
