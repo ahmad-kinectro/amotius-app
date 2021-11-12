@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import {Formik} from 'formik';
 import React from 'react';
 import {
@@ -30,7 +28,8 @@ const validationSchema = Yup.object().shape({
     .matches(/\w*[a-z]\w*/, 'Password must have a small letter')
     .matches(/\w*[A-Z]\w*/, 'Password must have a capital letter')
     .matches(/\d/, 'Password must have a number')
-    .min(8, 'Password should be at least 8 character long.').required('Please enter your password.'),
+    .min(8, 'Password should be at least 8 character long.')
+    .required('Please enter your password.'),
   confirmPassword: Yup.string()
     .required('Confirm Password is required.')
     .oneOf([Yup.ref('password')], 'Password not match.'),
@@ -51,9 +50,14 @@ const Register = props => {
   const [loading, setLoading] = React.useState(false);
   const [hidePassword, sethidePassword] = React.useState(true);
   const [confirmHidePassword, setConfirmHidePassword] = React.useState(true);
-  const securityQuestions = [{label: 'Your first pet name?', value: 'Your first pet name?'}, {label: 'Your favorite food?', value: 'Your favorite food?'}
-    , {label: 'Your nick name?', value: 'Your nick name?'}, {label: 'Your favorite sports?', value: 'Your favorite sports?'}];
-  const [securityQuestionsVisible, setSecurityQuestionsVisibility] = React.useState(false);
+  const securityQuestions = [
+    {label: 'Your first pet name?', value: 'Your first pet name?'},
+    {label: 'Your favorite food?', value: 'Your favorite food?'},
+    {label: 'Your nick name?', value: 'Your nick name?'},
+    {label: 'Your favorite sports?', value: 'Your favorite sports?'},
+  ];
+  const [securityQuestionsVisible, setSecurityQuestionsVisibility] =
+    React.useState(false);
   const [isTermSelected, setIsTermSelected] = React.useState(false);
   const {navigation} = props;
 
@@ -97,26 +101,27 @@ const Register = props => {
     // formik.setSubmitting(false);
   };
 
-
   return (
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
       {/* <StatusBar barStyle={'dark-content'} /> */}
-      <TouchableOpacity style={[Styles.flex]} onPress={() => {changeVisibility();}} activeOpacity={1}>
+      <TouchableOpacity
+        style={[Styles.flex]}
+        onPress={() => {
+          changeVisibility();
+        }}
+        activeOpacity={1}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-          <Formik onSubmit={handleChange}
-            validationSchema={validationSchema}>
+          <Formik onSubmit={handleChange} validationSchema={validationSchema}>
             {props => (
-
               <View style={[Styles.flex, styles.mainWrapper]}>
                 {console.log('the props', props)}
                 <Text
                   color={Colors.BLACK}
-
                   style={{
                     fontSize: Mixins.scaleFont(24),
-                    fontWeight: 'bold', color: Colors.BLACK,
-                  }}
-                >
+                    fontWeight: 'bold',
+                    color: Colors.BLACK,
+                  }}>
                   Sign Up
                 </Text>
                 <View style={{height: 20}} />
@@ -124,12 +129,17 @@ const Register = props => {
                   <TextField
                     label="First Name"
                     name="first_name"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(first_name) => props.setFieldValue('first_name', first_name)}
+                    onChangeText={first_name =>
+                      props.setFieldValue('first_name', first_name)
+                    }
                     onBlur={() => props.setFieldTouched('first_name')}
                     error={props.touched.first_name && props.errors.first_name}
                     // keyboardType="email-address"
@@ -152,12 +162,17 @@ const Register = props => {
                   <TextField
                     label="Last Name"
                     name="last_name"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(last_name) => props.setFieldValue('last_name', last_name)}
+                    onChangeText={last_name =>
+                      props.setFieldValue('last_name', last_name)
+                    }
                     onBlur={() => props.setFieldTouched('last_name')}
                     error={props.touched.last_name && props.errors.last_name}
                     // keyboardType="email-address"
@@ -181,12 +196,15 @@ const Register = props => {
                   <TextField
                     label="Email Address"
                     name="email"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(email) => props.setFieldValue('email', email)}
+                    onChangeText={email => props.setFieldValue('email', email)}
                     onBlur={() => props.setFieldTouched('email')}
                     error={props.touched.email && props.errors.email}
                     keyboardType="email-address"
@@ -206,12 +224,17 @@ const Register = props => {
                   <TextField
                     label="Contact Number"
                     name="contact"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(contact) => props.setFieldValue('contact', contact)}
+                    onChangeText={contact =>
+                      props.setFieldValue('contact', contact)
+                    }
                     onBlur={() => props.setFieldTouched('contact')}
                     error={props.touched.contact && props.errors.contact}
                     // keyboardType="email-address"
@@ -233,12 +256,17 @@ const Register = props => {
                   <TextField
                     label="Address"
                     name="address"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(address) => props.setFieldValue('address', address)}
+                    onChangeText={address =>
+                      props.setFieldValue('address', address)
+                    }
                     onBlur={() => props.setFieldTouched('address')}
                     error={props.touched.address && props.errors.address}
                     autoCapitalize="none"
@@ -252,7 +280,16 @@ const Register = props => {
                     fontSize={14}
                   />
                 </View>
-                <Text style={[{marginBottom: 10, fontSize: Mixins.scaleFont(12), color: Colors.BLACK}]}>Date Of Birth</Text>
+                <Text
+                  style={[
+                    {
+                      marginBottom: 10,
+                      fontSize: Mixins.scaleFont(12),
+                      color: Colors.BLACK,
+                    },
+                  ]}>
+                  Date Of Birth
+                </Text>
                 <DateTimePicker
                   style={{
                     width: '100%',
@@ -304,7 +341,10 @@ const Register = props => {
                   <TextField
                     label="Password"
                     name="password"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
@@ -327,17 +367,24 @@ const Register = props => {
                     ref={passwordField}
                     fontSize={14}
                   />
-                  <View style={{
-                    position: 'absolute',
-                    right: 10, backgroundColor: Colors.TRANSPARENT,
-                    height: 30, width: 20
-                    // , bottom: 15, top: 10
-                    , justifyContent: 'flex-end', alignContent: 'center', alignItems: 'center',
-                  }}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 10,
+                      backgroundColor: Colors.TRANSPARENT,
+                      height: 30,
+                      width: 20,
+                      // , bottom: 15, top: 10
+                      justifyContent: 'flex-end',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                    }}>
                     <FIcon
                       name={hidePassword ? 'eye-slash' : 'eye'}
                       size={15}
-                      color={hidePassword ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
+                      color={
+                        hidePassword ? Colors.GRAYLIGHT : Colors.PURPLELIGHT
+                      }
                       onPress={() => sethidePassword(!hidePassword)}
                     />
                   </View>
@@ -346,7 +393,10 @@ const Register = props => {
                   <TextField
                     label="Confirm Password"
                     name="confirmPassword"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
@@ -356,7 +406,10 @@ const Register = props => {
                       props.setFieldValue('confirmPassword', confirmPassword)
                     }
                     onBlur={() => props.setFieldTouched('confirmPassword')}
-                    error={props.touched.confirmPassword && props.errors.confirmPassword}
+                    error={
+                      props.touched.confirmPassword &&
+                      props.errors.confirmPassword
+                    }
                     keyboardType={
                       Platform.OS === 'ios'
                         ? 'numbers-and-punctuation'
@@ -369,24 +422,44 @@ const Register = props => {
                     ref={ConfirmPasswordField}
                     fontSize={14}
                   />
-                  <View style={{
-                    position: 'absolute',
-                    right: 10, backgroundColor: Colors.TRANSPARENT,
-                    height: 30, width: 20
-                    // , bottom: 15, top: 10
-                    , justifyContent: 'flex-end', alignContent: 'center', alignItems: 'center',
-                  }}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 10,
+                      backgroundColor: Colors.TRANSPARENT,
+                      height: 30,
+                      width: 20,
+                      // , bottom: 15, top: 10
+                      justifyContent: 'flex-end',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                    }}>
                     <FIcon
                       name={confirmHidePassword ? 'eye-slash' : 'eye'}
                       size={15}
-                      color={confirmHidePassword ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
-                      onPress={() => setConfirmHidePassword(!confirmHidePassword)}
+                      color={
+                        confirmHidePassword
+                          ? Colors.GRAYLIGHT
+                          : Colors.PURPLELIGHT
+                      }
+                      onPress={() =>
+                        setConfirmHidePassword(!confirmHidePassword)
+                      }
                     />
                   </View>
                 </View>
 
                 {/* dropdown */}
-                <Text style={[{marginBottom: 10, fontSize: Mixins.scaleFont(12), color: Colors.BLACK}]}>Security Question</Text>
+                <Text
+                  style={[
+                    {
+                      marginBottom: 10,
+                      fontSize: Mixins.scaleFont(12),
+                      color: Colors.BLACK,
+                    },
+                  ]}>
+                  Security Question
+                </Text>
                 <DropDownPicker
                   items={securityQuestions}
                   defaultValue={props.values.primaryCriteria}
@@ -425,12 +498,17 @@ const Register = props => {
                   <TextField
                     label="Answer"
                     name="answer"
-                    inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
+                    inputStyle={{
+                      borderWidth: 1,
+                      borderColor: Colors.PURPLELIGHT,
+                    }}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(answer) => props.setFieldValue('answer', answer)}
+                    onChangeText={answer =>
+                      props.setFieldValue('answer', answer)
+                    }
                     // onBlur={() => props.setFieldTouched('email')}
                     // error={props.touched.email && props.errors.email}
                     autoCapitalize="none"
@@ -452,10 +530,11 @@ const Register = props => {
                     uncheckedCheckBoxColor={Colors.PURPLELIGHT}
                   />
                   <TouchableOpacity onPress={() => alert('Terms & Conditions')}>
-                    <Text style={{
-                      color: Colors.BLACK,
-                      fontSize: Mixins.scaleFont(12)
-                    }}>
+                    <Text
+                      style={{
+                        color: Colors.BLACK,
+                        fontSize: Mixins.scaleFont(12),
+                      }}>
                       Agree to terms and conditions
                     </Text>
                   </TouchableOpacity>
@@ -482,24 +561,21 @@ const Register = props => {
                     //   props.isSubmitting ||
                     //   loading
                     // }
-                    onPress={() => {props.handleSubmit();}}
-                  >
+                    onPress={() => {
+                      props.handleSubmit();
+                    }}>
                     {!loading && (
                       <Text
-                        style={[Styles.textAuthButton, {
-                          paddingRight: loading ? 15 : 0,
-                        },
+                        style={[
+                          Styles.textAuthButton,
+                          {
+                            paddingRight: loading ? 15 : 0,
+                          },
                         ]}>
                         Sign Up
                       </Text>
                     )}
-                    {loading && (
-                      <Spinner
-                        type={'ThreeBounce'}
-                        size={30}
-                        color={Colors.PRIMARY}
-                      />
-                    )}
+                    {loading && <Spinner size={30} color={Colors.PRIMARY} />}
                   </TouchableOpacity>
 
                   <View style={Styles.rowFlexEnd}>
@@ -510,7 +586,8 @@ const Register = props => {
                         navigation.navigate('Login');
                       }}>
                       <Text style={[Styles.text12Black]}>
-                        Already have an account? | <Text style={[Styles.text12BlackBold]}>Sign In</Text>
+                        Already have an account? |{' '}
+                        <Text style={[Styles.text12BlackBold]}>Sign In</Text>
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -520,7 +597,6 @@ const Register = props => {
           </Formik>
         </KeyboardAwareScrollView>
       </TouchableOpacity>
-
     </SafeAreaView>
   );
 };

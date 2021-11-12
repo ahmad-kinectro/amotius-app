@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-shadow */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import {Mixins, Colors, Text} from '../styles';
@@ -108,7 +104,9 @@ const TextField = React.forwardRef((props, ref) => {
               marginTop: transparent ? 0 : 10,
               paddingLeft: leftIcon ? 10 : transparent ? 0 : 10,
               height: height,
-              backgroundColor: transparent ? 'transparent' : Colors.WHISPERLIGHT,
+              backgroundColor: transparent
+                ? 'transparent'
+                : Colors.WHISPERLIGHT,
               borderRadius: transparent ? 0 : 5,
               borderWidth: transparent ? 0 : 0.5,
               borderColor: Colors.PURPLELIGHT,
@@ -127,9 +125,9 @@ const TextField = React.forwardRef((props, ref) => {
           onFocus={onFocus}
           onBlur={onBlur}
           ref={ref}
-        // onContentSizeChange={event => {
-        //   changeHeight(event.nativeEvent.contentSize.height);
-        // }}
+          // onContentSizeChange={event => {
+          //   changeHeight(event.nativeEvent.contentSize.height);
+          // }}
         />
         {text.length > 0 && clearIcon ? (
           <MIcon

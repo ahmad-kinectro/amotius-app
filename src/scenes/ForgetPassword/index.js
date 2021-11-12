@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import {Formik} from 'formik';
 import React from 'react';
 import {
@@ -15,7 +13,6 @@ import TextField from '../../components/TextField';
 import * as Yup from 'yup';
 import {Colors, Mixins, Spinner, Styles} from '../../styles';
 import styles from './styles';
-
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,12 +36,15 @@ const ForgetPassword = props => {
   };
   return (
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
-      <TouchableOpacity style={[Styles.flex]} onPress={() => {changeVisibility();}} activeOpacity={1}>
+      <TouchableOpacity
+        style={[Styles.flex]}
+        onPress={() => {
+          changeVisibility();
+        }}
+        activeOpacity={1}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-          <Formik onSubmit={handleChange}
-            validationSchema={validationSchema}>
+          <Formik onSubmit={handleChange} validationSchema={validationSchema}>
             {props => (
-
               <View style={[Styles.flex, styles.mainWrapper]}>
                 <View style={{height: 20}} />
                 <View style={Styles.flexCenter}>
@@ -55,7 +55,7 @@ const ForgetPassword = props => {
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(email) => props.setFieldValue('email', email)}
+                    onChangeText={email => props.setFieldValue('email', email)}
                     onBlur={() => props.setFieldTouched('email')}
                     error={props.touched.email && props.errors.email}
                     keyboardType="email-address"
@@ -86,14 +86,16 @@ const ForgetPassword = props => {
                     //   props.isSubmitting ||
                     //   loading
                     // }
-                    onPress={() => {props.handleSubmit();}}
-                  >
+                    onPress={() => {
+                      props.handleSubmit();
+                    }}>
                     {!loading && (
                       <Text
-                        style={[Styles.text12BlackBold,
-                        {
-                          paddingRight: loading ? 15 : 0,
-                        },
+                        style={[
+                          Styles.text12BlackBold,
+                          {
+                            paddingRight: loading ? 15 : 0,
+                          },
                         ]}>
                         Submit
                       </Text>
@@ -114,7 +116,9 @@ const ForgetPassword = props => {
                       onPress={() => {
                         navigation.navigate('Login');
                       }}>
-                      <Text style={[Styles.text12BlackBold]}>Back To Login?</Text>
+                      <Text style={[Styles.text12BlackBold]}>
+                        Back To Login?
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>

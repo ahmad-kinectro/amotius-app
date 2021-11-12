@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import {Formik} from 'formik';
 import React from 'react';
 import {
@@ -17,29 +15,27 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TextField from '../../components/TextField';
 import * as Yup from 'yup';
 import {Colors, Mixins, Spinner, Styles} from '../../styles';
-import styles from './styles'
-import Logo from '../../assets/Logo.png'
+import styles from './styles';
+import amotius from '../../assets/amotius.png';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
-
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Please enter your email.')
     .email('Please enter a valid email.'),
   password: Yup.string().required('Please enter your password.'),
-
 });
 const Login = props => {
-  const {navigation} = props
+  const {navigation} = props;
   const passwordField = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [hidePass, setHidePass] = React.useState(true);
   const handleChange = (formData, formik) => {
     setLoading(true);
-    console.log('formdata', formData)
+    console.log('formdata', formData);
     if (formData) {
-      setLoading(false)
-      Alert.alert('hi' + formData.email)
+      setLoading(false);
+      Alert.alert('hi' + formData.email);
     }
     // await AuthLogin(formData.email, formData.password).then(res => {
     //   setLoading(false);
@@ -67,20 +63,16 @@ const Login = props => {
     // formik.setSubmitting(false);
   };
 
-
   return (
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
       <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-        <Formik onSubmit={handleChange}
-          validationSchema={validationSchema}>
+        <Formik onSubmit={handleChange} validationSchema={validationSchema}>
           {props => (
-
-            <View style={[Styles.flex, styles.mainWrapper,]}>
+            <View style={[Styles.flex, styles.mainWrapper]}>
               <View style={[Styles.flexCenter, styles.logoWrapper]}>
-                <Image source={Logo} style={Styles.authLogo} />
+                <Image source={amotius} style={Styles.authLogo} />
               </View>
-              <Text
-                style={[Styles.text24BlackBold]}>
+              <Text style={[Styles.text24BlackBold]}>
                 Login to your account
               </Text>
               <View style={{height: 20}} />
@@ -92,7 +84,7 @@ const Login = props => {
                   textColor={Colors.BLACK}
                   baseColor={Colors.BLACK}
                   placeholderTextColor={Colors.GRAY}
-                  onChangeText={(email) => props.setFieldValue('email', email)}
+                  onChangeText={email => props.setFieldValue('email', email)}
                   onBlur={() => props.setFieldTouched('email')}
                   error={props.touched.email && props.errors.email}
                   keyboardType="email-address"
@@ -140,13 +132,13 @@ const Login = props => {
                     onPress={() => setHidePass(!hidePass)}
                   />
                 </View>
-
               </View>
-              <TouchableOpacity style={{}} onPress={() => {navigation.navigate('ForgetPassword')}}>
-                <Text
-                  style={[Styles.text12Black]}>
-                  Forget Password?
-                </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  navigation.navigate('ForgetPassword');
+                }}>
+                <Text style={[Styles.text12Black]}>Forget Password?</Text>
               </TouchableOpacity>
               <View style={[Styles.authButtonWrapper]}>
                 <TouchableOpacity
@@ -161,21 +153,17 @@ const Login = props => {
                   //   props.isSubmitting ||
                   //   loading
                   // }
-                  onPress={() => props.handleSubmit()}
-                >
+                  onPress={() => props.handleSubmit()}>
                   {!loading && (
                     <Text
-                      style={[Styles.textAuthButton, {paddingRight: loading ? 15 : 0, },]}>
+                      style={[
+                        Styles.textAuthButton,
+                        {paddingRight: loading ? 15 : 0},
+                      ]}>
                       LOGIN
                     </Text>
                   )}
-                  {loading && (
-                    <Spinner
-                      type={'ThreeBounce'}
-                      size={30}
-                      color={Colors.PRIMARY}
-                    />
-                  )}
+                  {loading && <Spinner size={30} color={Colors.PRIMARY} />}
                 </TouchableOpacity>
                 <View style={Styles.rowFlexEnd}>
                   <TouchableOpacity
@@ -185,7 +173,8 @@ const Login = props => {
                       navigation.navigate('Register');
                     }}>
                     <Text style={[Styles.text12Black]}>
-                      Don't have an account? | <Text style={[Styles.text12BlackBold]}>Sign Up</Text>
+                      Don't have an account? |{' '}
+                      <Text style={[Styles.text12BlackBold]}>Sign Up</Text>
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -194,7 +183,6 @@ const Login = props => {
           )}
         </Formik>
       </KeyboardAwareScrollView>
-
     </SafeAreaView>
   );
 };

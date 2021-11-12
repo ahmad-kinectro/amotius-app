@@ -1,9 +1,6 @@
-/* eslint-disable no-shadow */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet} from 'react-native';
-import {Styles, Colors, } from '../../styles';
-import {IS_PAD, deviceWidth} from '../../styles/orientation'
+import {Styles, Colors} from '../../styles';
+import {IS_PAD, deviceWidth} from '../../styles/orientation';
 
 export default StyleSheet.create({
   mainWrapper: {
@@ -19,9 +16,7 @@ export default StyleSheet.create({
   TouchableOpacity: {
     height: 50,
     backgroundColor: Colors.PURPLELIGHT,
-    width:
-      deviceWidth - (IS_PAD ? (deviceWidth / 5) * 2 : 60),
+    width: deviceWidth - (IS_PAD ? (deviceWidth / 5) * 2 : 60),
     borderRadius: 5,
   },
 });
-

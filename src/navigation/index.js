@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -52,12 +49,11 @@ const StackCommonOptions = {
   headerTintColor: Colors.WHITE,
 };
 
-const Navigation = ({
-}) => {
+const Navigation = ({}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        mode="card"
+        presentation="card"
         initialRouteName="Loading"
         screenOptions={StackCommonOptions}>
         <Stack.Screen
@@ -66,14 +62,10 @@ const Navigation = ({
           options={{headerShown: false}}
         />
         <Stack.Screen name="Login" options={{headerShown: false}}>
-          {props => (
-            <Login {...props} />
-          )}
+          {props => <Login {...props} />}
         </Stack.Screen>
         <Stack.Screen name="Register" options={{headerShown: false}}>
-          {props => (
-            <Register {...props} />
-          )}
+          {props => <Register {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name="ForgetPassword"

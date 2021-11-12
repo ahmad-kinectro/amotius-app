@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   text24BlackBold: {
     fontSize: Mixins.scaleFont(24),
-    fontWeight: 'bold', color: Colors.BLACK
+    fontWeight: 'bold', color: Colors.BLACK,
   },
   eyeView: {
     position: 'absolute',
