@@ -1,19 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StatusBar,
-  Platform,
-  TouchableOpacity,
-  Alert,
-  Keyboard,
-} from 'react-native';
-
-import {Colors, Mixins, Spinner, Styles} from './src/styles';
-
+import {View, StatusBar} from 'react-native';
+import {Colors, Styles} from './src/styles';
 import Navigation from './src/navigation';
 import KeepAwake from 'react-native-keep-awake';
 

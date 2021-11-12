@@ -182,7 +182,6 @@ const Login = props => {
                     style={Styles.flexDirectionRow}
                     activeOpacity={0.6}
                     onPress={() => {
-                      console.log('jjjj')
                       navigation.navigate('Register');
                     }}>
                     <Text style={[Styles.text12Black]}>

@@ -55,6 +55,7 @@ const Register = props => {
     , {label: 'Your nick name?', value: 'Your nick name?'}, {label: 'Your favorite sports?', value: 'Your favorite sports?'}];
   const [securityQuestionsVisible, setSecurityQuestionsVisibility] = React.useState(false);
   const [isTermSelected, setIsTermSelected] = React.useState(false);
+  const {navigation} = props;
 
   const setTermSelected = () => {
     setIsTermSelected(true);
@@ -64,7 +65,6 @@ const Register = props => {
     setSecurityQuestionsVisibility(false);
   };
   const handleChange = (formData, formik) => {
-    const {navigation} = props;
     setLoading(true);
     console.log('formdata', formData);
     if (formData) {
@@ -507,8 +507,7 @@ const Register = props => {
                       style={Styles.flexDirectionRow}
                       activeOpacity={0.6}
                       onPress={() => {
-                        alert('login');
-                        // navigation.navigate('Login');
+                        navigation.navigate('Login');
                       }}>
                       <Text style={[Styles.text12Black]}>
                         Already have an account? | <Text style={[Styles.text12BlackBold]}>Sign In</Text>
