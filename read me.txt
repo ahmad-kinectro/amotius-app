@@ -1,0 +1,4 @@
+AOA
+this is the amotius react-native app
+here is the repository on github so that we can clone and integrate code of each developer 
+thank you!
