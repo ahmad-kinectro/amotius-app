@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Styles, Colors} from '../../styles';
+import {Colors} from '../../styles';
 import {IS_PAD, deviceWidth} from '../../styles/orientation';
 
 export default StyleSheet.create({

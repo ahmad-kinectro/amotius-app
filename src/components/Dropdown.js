@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   StyleSheet,
@@ -20,12 +17,11 @@ import {Colors} from '../styles';
 Feather.loadFont();
 
 class DropDownPicker extends React.Component {
-
   constructor(props) {
     super(props);
     let choice;
     let items = [];
-    let defaultValueIndex; // captures index of first defaultValue for initial scrolling
+    let defaultValueIndex;
     if (!props.multiple) {
       if (props.defaultValue || props.defaultValue === 0) {
         choice = props.items.find(item => item.value === props.defaultValue);
@@ -71,10 +67,10 @@ class DropDownPicker extends React.Component {
       choice: props.multiple
         ? items
         : {
-          label: choice.label,
-          value: choice.value,
-          icon: choice.icon,
-        },
+            label: choice.label,
+            value: choice.value,
+            icon: choice.icon,
+          },
       searchableText: null,
       isVisible: props.isVisible,
       props: {
@@ -97,10 +93,10 @@ class DropDownPicker extends React.Component {
       const {label, value, icon} =
         props.defaultValue === null
           ? {
-            label: null,
-            value: null,
-            icon: () => {},
-          }
+              label: null,
+              value: null,
+              icon: () => {},
+            }
           : props.items.find(item => item.value === props.defaultValue);
       return {
         choice: {
@@ -119,7 +115,7 @@ class DropDownPicker extends React.Component {
     if (
       state.props.multiple &&
       JSON.stringify(props.defaultValue) !==
-      JSON.stringify(state.props.defaultValue)
+        JSON.stringify(state.props.defaultValue)
     ) {
       let items = [];
       if (
@@ -472,12 +468,12 @@ class DropDownPicker extends React.Component {
                 marginLeft:
                   (this.props.labelStyle.hasOwnProperty('textAlign') &&
                     this.props.labelStyle.textAlign === 'left') ||
-                    !this.props.labelStyle.hasOwnProperty('textAlign')
+                  !this.props.labelStyle.hasOwnProperty('textAlign')
                     ? 5
                     : 0,
                 marginRight:
                   this.props.labelStyle.hasOwnProperty('textAlign') &&
-                    this.props.labelStyle.textAlign === 'right'
+                  this.props.labelStyle.textAlign === 'right'
                     ? 5
                     : 0,
               },
@@ -485,8 +481,8 @@ class DropDownPicker extends React.Component {
               this.state.choice.icon && {marginLeft: 5},
               multiple
                 ? {
-                  color: '#999',
-                }
+                    color: '#999',
+                  }
                 : null,
             ]}>
             {multiple
@@ -501,13 +497,13 @@ class DropDownPicker extends React.Component {
               <View style={[this.props.arrowStyle, {opacity}]}>
                 {!this.state.isVisible
                   ? this.props.customArrowDown(
-                    this.props.arrowSize,
-                    this.props.arrowColor,
-                  )
+                      this.props.arrowSize,
+                      this.props.arrowColor,
+                    )
                   : this.props.customArrowUp(
-                    this.props.arrowSize,
-                    this.props.arrowColor,
-                  )}
+                      this.props.arrowSize,
+                      this.props.arrowColor,
+                    )}
               </View>
             </View>
           )}
@@ -573,16 +569,16 @@ class DropDownPicker extends React.Component {
                       styles.dropDownItem,
                       this.props.itemStyle,
                       this.state.choice.value === item.value &&
-                      this.props.activeItemStyle,
+                        this.props.activeItemStyle,
                       {
                         opacity: item?.disabled || false === true ? 0.3 : 1,
                         alignItems: 'center',
                         ...(multiple
                           ? {
-                            justifyContent: 'space-between',
-                            ...(this.isSelected(item) &&
-                              this.props.activeItemStyle),
-                          }
+                              justifyContent: 'space-between',
+                              ...(this.isSelected(item) &&
+                                this.props.activeItemStyle),
+                            }
                           : {}),
                       },
                     ]}
@@ -604,9 +600,9 @@ class DropDownPicker extends React.Component {
                           this.props.labelStyle,
                           multiple
                             ? this.isSelected(item) &&
-                            this.props.activeLabelStyle
+                              this.props.activeLabelStyle
                             : this.state.choice.value === item.value &&
-                            this.props.activeLabelStyle,
+                              this.props.activeLabelStyle,
                           {
                             ...(item.icon && {
                               marginHorizontal: 5,

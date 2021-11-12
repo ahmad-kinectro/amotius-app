@@ -125,9 +125,6 @@ const TextField = React.forwardRef((props, ref) => {
           onFocus={onFocus}
           onBlur={onBlur}
           ref={ref}
-          // onContentSizeChange={event => {
-          //   changeHeight(event.nativeEvent.contentSize.height);
-          // }}
         />
         {text.length > 0 && clearIcon ? (
           <MIcon

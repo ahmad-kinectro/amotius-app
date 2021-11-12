@@ -1,7 +1,4 @@
-/* eslint-disable prettier/prettier */
-
-/* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   View,
@@ -11,8 +8,8 @@ import {
   Keyboard,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import {Colors, Mixins, Styles, Text} from '../styles';
-import {deviceWidth, deviceHeight} from '../styles/orientation';
+import {Colors, Styles, Text} from '../styles';
+import {deviceWidth} from '../styles/orientation';
 import MModal from 'react-native-modal';
 import Moment from 'moment';
 
@@ -22,16 +19,7 @@ const FORMATS = {
   time: 'HH:mm',
 };
 
-const SUPPORTED_ORIENTATIONS = [
-  'portrait',
-  'portrait-upside-down',
-  'landscape',
-  'landscape-left',
-  'landscape-right',
-];
-
-const DatePickerField = (props) => {
-  // console.log(props);
+const DatePickerField = props => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [dateValue, setDate] = React.useState(null);
   const getTitleElement = () => {
@@ -78,7 +66,6 @@ const DatePickerField = (props) => {
   };
 
   const onPressCancel = () => {
-    //console.log('cancel');
     setModalVisible(false);
 
     if (typeof props.onCloseModal === 'function') {
@@ -87,7 +74,6 @@ const DatePickerField = (props) => {
   };
 
   const onPressConfirm = () => {
-    // console.log('confirm');
     datePicked();
     setModalVisible(false);
 
@@ -98,8 +84,6 @@ const DatePickerField = (props) => {
 
   const getDate = (date = props.date) => {
     const {mode, minDate, maxDate, format = FORMATS[mode]} = props;
-
-    // date默认值
     if (!date) {
       let now = new Date();
       if (minDate) {
@@ -136,32 +120,22 @@ const DatePickerField = (props) => {
     if (typeof props.getDateStr === 'function') {
       return props.getDateStr(dateInstance);
     }
-    // console.log(
-    //   format,
-    //   mode,
-    //   FORMATS[mode],r
-    //   Moment(dateInstance).format(props.format ? props.format : format),
-    // );
     return Moment(dateInstance).format(props.format ? props.format : format);
   };
 
   const datePicked = () => {
-    // console.log(dateValue);
-    // console.log(typeof props.onDateChange, getDateStr(dateValue));
     if (typeof props.onDateChange === 'function') {
       props.onDateChange(getDateStr(dateValue), dateValue);
     }
   };
 
-  const onDateChange = (date) => {
-    // console.log(date);
+  const onDateChange = date => {
     setDate(date);
   };
   const onModalClose = () => {
     setModalVisible(false);
   };
   const {customStyles} = props;
-  //console.log(dateValue);
   return (
     <>
       <TouchableOpacity
@@ -190,13 +164,11 @@ const DatePickerField = (props) => {
               margin: 0,
               justifyContent: 'center',
               alignItems: 'center',
-              //   marginTop: 0,
             }}
             onBackdropPress={onModalClose}
             onSwipeComplete={onModalClose}
             onBackButtonPress={onModalClose}
             swipeThreshold={150}
-            // deviceHeight={200}
             swipeDirection={['right']}>
             <View style={[Styles.flexCenter]}>
               <View
@@ -212,18 +184,16 @@ const DatePickerField = (props) => {
                   onPress={onPressMask}>
                   <View
                     style={[styles.datePickerCon, customStyles.datePickerCon]}>
-                    <View style={{
-                      backgroundColor: Colors.GRAYLIGHT
-                      //props.check ? Colors.SECONDARY : Colors.WHITE,
-                    }}>
+                    <View
+                      style={{
+                        backgroundColor: Colors.GRAYLIGHT,
+                      }}>
                       <DatePicker
                         date={dateValue}
                         style={{width: deviceWidth - 20}}
                         onDateChange={onDateChange}
                         androidVariant="nativeAndroid"
-                        textColor={Colors.WHITE //props.check ? Colors.WHITE : Colors.SECONDARY_5
-                        }
-                        // fadeToColor={'#000'}
+                        textColor={Colors.WHITE}
                         mode={props.mode}
                       />
                     </View>
@@ -281,7 +251,6 @@ const DatePickerField = (props) => {
             }}
             style={[
               {
-                // height: 30,
                 position: 'absolute',
                 top: 8,
                 right: 40,
@@ -333,12 +302,9 @@ let styles = StyleSheet.create({
   },
   datePickerCon: {
     backgroundColor: Colors.WHITE,
-    // height: 0,
     overflow: 'hidden',
   },
   btnText: {
-    // position: 'absolute',
-    // top: 0,
     height: 42,
     paddingHorizontal: 20,
     flexDirection: 'row',

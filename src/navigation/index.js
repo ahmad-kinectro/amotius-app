@@ -9,6 +9,7 @@ import LoadingScreen from '../scenes/Loading';
 import Register from '../scenes/Register';
 import ForgetPassword from '../scenes/ForgetPassword';
 import AIcon from 'react-native-vector-icons/AntDesign';
+import Dashboard from '../scenes/Dashboard';
 
 const Stack = createStackNavigator();
 
@@ -33,7 +34,7 @@ const StackCommonHeaderOptions = (navigation, back = false) => {
         color={Colors.WHITE}
         size={28}
         style={{paddingLeft: 15}}
-        onPress={() => navigation.toggleDrawer()}
+        // onPress={() => navigation.toggleDrawer()}
       />
     ),
   };
@@ -66,6 +67,9 @@ const Navigation = ({}) => {
         </Stack.Screen>
         <Stack.Screen name="Register" options={{headerShown: false}}>
           {props => <Register {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Dashboard" options={{headerShown: false}}>
+          {props => <Dashboard {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name="ForgetPassword"

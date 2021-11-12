@@ -3,8 +3,6 @@ import React from 'react';
 import {
   SafeAreaView,
   Image,
-  StatusBar,
-  StyleSheet,
   Text,
   View,
   Platform,
@@ -16,8 +14,11 @@ import TextField from '../../components/TextField';
 import * as Yup from 'yup';
 import {Colors, Mixins, Spinner, Styles} from '../../styles';
 import styles from './styles';
-import amotius from '../../assets/amotius.png';
+import Logo from '../../assets/amotius.png';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
+import FastImage from 'react-native-fast-image';
+import {UserLogin} from './networkCall';
+import {showMessage} from 'react-native-flash-message';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,48 +30,52 @@ const Login = props => {
   const {navigation} = props;
   const passwordField = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
-  const [hidePass, setHidePass] = React.useState(true);
+  const [hidePassword, setHidePassword] = React.useState(true);
   const handleChange = (formData, formik) => {
     setLoading(true);
-    console.log('formdata', formData);
-    if (formData) {
+    UserLogin(formData).then(res => {
+      if (res.status === 200) {
+        if (res.role === 'admin') {
+          navigation.navigate('Dashboard');
+          showMessage({
+            visible: true,
+            key: Math.random().toString(36).substring(7),
+            type: 'success',
+            message: '',
+            description: 'Login Successfully!',
+          });
+        }
+        if (res.role === 'customer') {
+          navigation.navigate('Dashboard');
+        }
+      } else {
+        showMessage({
+          visible: true,
+          key: Math.random().toString(36).substring(7),
+          type: 'danger',
+          message: res.message,
+        });
+      }
       setLoading(false);
-      Alert.alert('hi' + formData.email);
-    }
-    // await AuthLogin(formData.email, formData.password).then(res => {
-    //   setLoading(false);
-    //   if (res.status === 200) {
-    //     console.log('res', res)
-    //     props.setAuth(true);
-    //     props.setUserId(res.userId);
-    //     props.setOrganization_id(res.organization_id);
-    //     props.setUserName(res.userName)
-    //     props.setUserRole(res.useRole)
-    //     showMessage({
-    //       message: '',
-    //       description: res.message,
-    //       type: 'success',
-    //     });
-    //     // navigation.dispatch(StackActions.replace('Drawer'));
-    //   } else {
-    //     showMessage({
-    //       message: '',
-    //       description: res.message,
-    //       type: 'danger',
-    //     });
-    //   }
-    // });
-    // formik.setSubmitting(false);
+    });
+    formik.setSubmitting(false);
   };
 
   return (
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
       <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-        <Formik onSubmit={handleChange} validationSchema={validationSchema}>
+        <Formik
+          onSubmit={handleChange}
+          validationSchema={validationSchema}
+          initialValues={{email: '', password: ''}}>
           {props => (
             <View style={[Styles.flex, styles.mainWrapper]}>
-              <View style={[Styles.flexCenter, styles.logoWrapper]}>
-                <Image source={amotius} style={Styles.authLogo} />
+              <View style={[Styles.flexCenter]}>
+                <FastImage
+                  source={Logo}
+                  style={Styles.authLogo}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
               </View>
               <Text style={[Styles.text24BlackBold]}>
                 Login to your account
@@ -108,7 +113,7 @@ const Login = props => {
                   textColor={Colors.BLACK}
                   baseColor={Colors.BLACK}
                   placeholderTextColor={Colors.GRAY}
-                  secureTextEntry={hidePass}
+                  secureTextEntry={hidePassword}
                   onChangeText={password =>
                     props.setFieldValue('password', password)
                   }
@@ -124,14 +129,16 @@ const Login = props => {
                   fontSize={14}
                   onSubmitEditing={props.handleSubmit}
                 />
-                <View style={[Styles.eyeView]}>
+                <TouchableOpacity
+                  style={[Styles.eyeView]}
+                  onPress={() => setHidePassword(!hidePassword)}
+                  activeOpacity={0.6}>
                   <FIcon
-                    name={hidePass ? 'eye-slash' : 'eye'}
+                    name={hidePassword ? 'eye-slash' : 'eye'}
                     size={15}
-                    color={hidePass ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
-                    onPress={() => setHidePass(!hidePass)}
+                    color={hidePassword ? Colors.GRAYLIGHT : Colors.PURPLELIGHT}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity
                 style={{}}
@@ -147,12 +154,12 @@ const Login = props => {
                     Styles.flexCenter,
                     styles.TouchableOpacity,
                   ]}
-                  // disabled={
-                  //   !props.isValid ||
-                  //   !props.dirty ||
-                  //   props.isSubmitting ||
-                  //   loading
-                  // }
+                  disabled={
+                    !props.isValid ||
+                    !props.dirty ||
+                    props.isSubmitting ||
+                    loading
+                  }
                   onPress={() => props.handleSubmit()}>
                   {!loading && (
                     <Text
@@ -163,9 +170,15 @@ const Login = props => {
                       LOGIN
                     </Text>
                   )}
-                  {loading && <Spinner size={30} color={Colors.PRIMARY} />}
+                  {loading && (
+                    <Spinner
+                      size={30}
+                      type={'ThreeBounce'}
+                      color={Colors.PRIMARY}
+                    />
+                  )}
                 </TouchableOpacity>
-                <View style={Styles.rowFlexEnd}>
+                <View style={[Styles.rowFlexEnd, {paddingTop: 5}]}>
                   <TouchableOpacity
                     style={Styles.flexDirectionRow}
                     activeOpacity={0.6}
