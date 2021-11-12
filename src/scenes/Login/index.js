@@ -70,7 +70,7 @@ const Login = props => {
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
       <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
         <Formik onSubmit={handleChange}
-          validationSchema={validationSchema}>
+          validationSchema={validationSchema} initialValues={{email: '', password: '', }}>
           {props => (
             <View style={[Styles.flex, styles.mainWrapper]}>
               <View style={[Styles.flexCenter]}>
@@ -151,12 +151,12 @@ const Login = props => {
                     Styles.flexCenter,
                     styles.TouchableOpacity,
                   ]}
-                  // disabled={
-                  //   !props.isValid ||
-                  //   !props.dirty ||
-                  //   props.isSubmitting ||
-                  //   loading
-                  // }
+                  disabled={
+                    !props.isValid ||
+                    !props.dirty ||
+                    props.isSubmitting ||
+                    loading
+                  }
                   onPress={() => props.handleSubmit()}
                 >
                   {!loading && (

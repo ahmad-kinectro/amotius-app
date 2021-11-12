@@ -31,7 +31,6 @@ const SUPPORTED_ORIENTATIONS = [
 ];
 
 const DatePickerField = (props) => {
-  // console.log(props);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [dateValue, setDate] = React.useState(null);
   const getTitleElement = () => {
@@ -78,7 +77,6 @@ const DatePickerField = (props) => {
   };
 
   const onPressCancel = () => {
-    //console.log('cancel');
     setModalVisible(false);
 
     if (typeof props.onCloseModal === 'function') {
@@ -87,7 +85,6 @@ const DatePickerField = (props) => {
   };
 
   const onPressConfirm = () => {
-    // console.log('confirm');
     datePicked();
     setModalVisible(false);
 
@@ -98,8 +95,6 @@ const DatePickerField = (props) => {
 
   const getDate = (date = props.date) => {
     const {mode, minDate, maxDate, format = FORMATS[mode]} = props;
-
-    // date默认值
     if (!date) {
       let now = new Date();
       if (minDate) {
@@ -136,32 +131,22 @@ const DatePickerField = (props) => {
     if (typeof props.getDateStr === 'function') {
       return props.getDateStr(dateInstance);
     }
-    // console.log(
-    //   format,
-    //   mode,
-    //   FORMATS[mode],r
-    //   Moment(dateInstance).format(props.format ? props.format : format),
-    // );
     return Moment(dateInstance).format(props.format ? props.format : format);
   };
 
   const datePicked = () => {
-    // console.log(dateValue);
-    // console.log(typeof props.onDateChange, getDateStr(dateValue));
     if (typeof props.onDateChange === 'function') {
       props.onDateChange(getDateStr(dateValue), dateValue);
     }
   };
 
   const onDateChange = (date) => {
-    // console.log(date);
     setDate(date);
   };
   const onModalClose = () => {
     setModalVisible(false);
   };
   const {customStyles} = props;
-  //console.log(dateValue);
   return (
     <>
       <TouchableOpacity

@@ -38,9 +38,9 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required('Confirm Password is required.')
     .oneOf([Yup.ref('password')], 'Password not match.'),
-  first_name: Yup.string().required('Please enter first name.'),
-  last_name: Yup.string().required('Please enter last name.'),
-  contact: Yup.string().required('Please enter your contact number.'),
+  firstName: Yup.string().required('Please enter first name.'),
+  lastName: Yup.string().required('Please enter last name.'),
+  contactNumber: Yup.string().required('Please enter your contact number.'),
   address: Yup.string().required('Please enter your address.'),
   answer: Yup.string().optional('Pleas anser the security question'),
 });
@@ -50,7 +50,7 @@ const Register = props => {
   const lastNameFeild = React.useRef(null);
   const emailField = React.useRef(null);
   const addressField = React.useRef(null);
-  const contactField = React.useRef(null);
+  const contactNumberField = React.useRef(null);
   const questionFeild = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [hidePassword, setHidePassword] = React.useState(true);
@@ -99,7 +99,20 @@ const Register = props => {
       <TouchableOpacity style={[Styles.flex]} onPress={() => {changeVisibility();}} activeOpacity={1}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
           <Formik onSubmit={handleChange}
-            validationSchema={validationSchema}>
+            validationSchema={validationSchema}
+            initialValues={{
+              firstName: '',
+              lastName: '',
+              email: '',
+              contactNumber: '',
+              role: 'Customer',
+              address: '',
+              dob: '',
+              password: '',
+              confirmPassword: '',
+              securityQuestion: '',
+              securityAnswer: '',
+            }}>
             {props => (
               <View style={[Styles.flex, styles.mainWrapper]}>
                 <View style={[Styles.flexCenter]}>
@@ -111,15 +124,15 @@ const Register = props => {
                 <View style={Styles.flexCenter}>
                   <TextField
                     label="First Name"
-                    name="first_name"
+                    name="firstName"
                     inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(first_name) => props.setFieldValue('first_name', first_name)}
-                    onBlur={() => props.setFieldTouched('first_name')}
-                    error={props.touched.first_name && props.errors.first_name}
+                    onChangeText={(firstName) => props.setFieldValue('firstName', firstName)}
+                    onBlur={() => props.setFieldTouched('firstName')}
+                    error={props.touched.firstName && props.errors.firstName}
                     // autoFocus={true}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -134,15 +147,15 @@ const Register = props => {
                 <View style={Styles.flexCenter}>
                   <TextField
                     label="Last Name"
-                    name="last_name"
+                    name="lastName"
                     inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(last_name) => props.setFieldValue('last_name', last_name)}
-                    onBlur={() => props.setFieldTouched('last_name')}
-                    error={props.touched.last_name && props.errors.last_name}
+                    onChangeText={(lastName) => props.setFieldValue('lastName', lastName)}
+                    onBlur={() => props.setFieldTouched('lastName')}
+                    error={props.touched.lastName && props.errors.lastName}
                     autoCapitalize="none"
                     autoCorrect={false}
                     returnKeyType="next"
@@ -172,7 +185,7 @@ const Register = props => {
                     autoCompleteType="email"
                     returnKeyType="next"
                     onSubmitEditing={() => {
-                      contactField.current.focus();
+                      contactNumberField.current.focus();
                     }}
                     ref={emailField}
                     blurOnSubmit={false}
@@ -182,22 +195,22 @@ const Register = props => {
                 <View style={Styles.flexCenter}>
                   <TextField
                     label="Contact Number"
-                    name="contact"
+                    name="contactNumber"
                     inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(contact) => props.setFieldValue('contact', contact)}
-                    onBlur={() => props.setFieldTouched('contact')}
-                    error={props.touched.contact && props.errors.contact}
+                    onChangeText={(contactNumber) => props.setFieldValue('contactNumber', contactNumber)}
+                    onBlur={() => props.setFieldTouched('contactNumber')}
+                    error={props.touched.contactNumber && props.errors.contactNumber}
                     returnKeyType="next"
                     autoCapitalize="none"
                     autoCorrect={false}
                     onSubmitEditing={() => {
                       addressField.current.focus();
                     }}
-                    ref={contactField}
+                    ref={contactNumberField}
                     blurOnSubmit={false}
                     fontSize={14}
                   />
@@ -231,13 +244,13 @@ const Register = props => {
                   zIndex={5004}
                   check={true}
                   maxDate={new Date()}
-                  date={props.values.endDate || null}
+                  date={props.values.dob || null}
                   mode="datetime"
                   placeholder="Select Date Time"
                   confirmBtnText="OK"
                   cancelBtnText="CANCEL"
                   format="YYYY-MM-DD HH:mm"
-                  onDateChange={date => {props.setFieldValue('endDate', date);}}
+                  onDateChange={date => {props.setFieldValue('dob', date);}}
                   iconComponent={
                     <AIcon
                       name="calendar"
@@ -360,22 +373,22 @@ const Register = props => {
                   placeholderStyle={styles.placeholderStyle}
                   dropDownStyle={styles.dropDownStyle}
                   onChangeItem={item => {
-                    props.setFieldValue('securityQuestions', item.value);
+                    props.setFieldValue('securityQuestion', item.value);
                   }}
                   zIndex={5000}
                 />
                 <View style={Styles.flexCenter}>
                   <TextField
                     label="Answer"
-                    name="answer"
+                    name="securityAnswer"
                     inputStyle={{borderWidth: 1, borderColor: Colors.PURPLELIGHT}}
                     tintColor={Colors.BLACK}
                     textColor={Colors.BLACK}
                     baseColor={Colors.BLACK}
                     placeholderTextColor={Colors.GRAY}
-                    onChangeText={(answer) => props.setFieldValue('answer', answer)}
-                    onBlur={() => props.setFieldTouched('answer')}
-                    error={props.touched.answer && props.errors.answer}
+                    onChangeText={(answer) => props.setFieldValue('securityAnswer', answer)}
+                    onBlur={() => props.setFieldTouched('securityAnswer')}
+                    error={props.touched.securityAnswer && props.errors.securityAnswer}
                     autoCapitalize="none"
                     autoCorrect={false}
                     ref={questionFeild}
@@ -410,12 +423,12 @@ const Register = props => {
                       Styles.flexCenter,
                       styles.TouchableOpacity,
                     ]}
-                    // disabled={
-                    //   !props.isValid ||
-                    //   !props.dirty ||
-                    //   props.isSubmitting ||
-                    //   loading
-                    // }
+                    disabled={
+                      !props.isValid ||
+                      !props.dirty ||
+                      props.isSubmitting ||
+                      loading
+                    }
                     onPress={() => {props.handleSubmit();}}
                   >
                     {!loading && (

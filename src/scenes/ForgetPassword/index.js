@@ -20,7 +20,6 @@ import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
 import {ForgotPassword} from './networkCall';
 
-
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Please enter your email.')
@@ -43,7 +42,7 @@ const ForgetPassword = props => {
           key: Math.random().toString(36).substring(7),
           type: 'success',
           message: res.message,
-          description: 'Please check your email',
+          // description: 'Please check your email',
         });
       } else {
         showMessage({
@@ -60,7 +59,7 @@ const ForgetPassword = props => {
     <SafeAreaView style={[Styles.flex, Styles.primaryBackground]}>
       <TouchableOpacity style={[Styles.flex]} onPress={() => {changeVisibility();}} activeOpacity={1}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-          <Formik onSubmit={handleChange}
+          <Formik onSubmit={handleChange} initialValues={{email: ''}}
             validationSchema={validationSchema}>
             {props => (
               <View style={[Styles.flex, styles.mainWrapper]}>
